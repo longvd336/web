@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- {{food}} -->
+    
+    {%for value in foods %}
+        <h3>Mon an so {{ loop.index0 }} </h3><br>
+        <b>Tieu de: </b>{{value.title}}<br>
+        <b>Mo ta: </b>{{value.description}}<br>
+        <img src = "{{value.link}}">
+        {% if value.type == "eat" %}
+            <p>Day la do an.</p>
+        {% else %}
+            <P>Day la do uong.</P>
+        
+        {% endif %}
+        <a href="/food/{{ loop.index0 }}"> Chi tiet mon an </a>
+        <hr>
+    {% endfor %}
+<!-- <b>: boi den, <br>: xuong dong -->
+    
+</body>
+</html>

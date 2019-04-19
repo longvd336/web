@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    
+    <b>Tieu de: </b>{{detail_food.title}}<br>
+    <b>Mo ta: </b>{{detail_food.description}}<br>
+    <img src = "{{detail_food.link}}">
+    {% if detail_food.type == "eat" %}
+        <p>Day la do an.</p>
+    {% else %}
+        <P>Day la do uong.</P>
+        
+    {% endif %}
+        
+</body>
+</html>

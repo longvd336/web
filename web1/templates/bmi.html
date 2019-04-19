@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <b>Can nang cua ban :</b> {{total[0]}} <br>
+    <b>chieu cao : </b> {{total[1]}}<br>
+    <b>The trang cua ban hien gio:</b>
+        {% if bmi < 16 %}
+            <p> Severely underweight</p>
+        {% elif bmi < 18.5 %}
+            <p> Underweight </p>
+        {% elif bmi < 25 %}     
+             <p >Normal </p>
+        {% elif bmi < 30 %}       
+             <p> Overweight</p>
+        {% else %}       
+            <p>Obese </p>
+        {% endif %}
+</body>
+</html>

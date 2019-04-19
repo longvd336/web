@@ -1,0 +1,3 @@
+#framework : flask , django , ...
+# luu y cong lap trong html voi jinja2
+#bien => 2cap ngoac nhon

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- {{user}} -->
+    
+    {%for key in user %}
+        {% if user_name == key %}
+            
+            <p>Ho va Ten :</p>{{user[user_name].name}}<br>
+            <p>Age :</p>{{user[user_name].age}}<br>
+            <p>Phone number:</p>{{user[user_name].phonenumber}}
+            {% endif %}
+        {% if user_name != key %}
+            <p>User not found</p>
+            {%endif%}
+        {% endfor %}
+            
+</body>
+</html>
