@@ -9,17 +9,17 @@
 <body>
     <!-- {{user}} -->
     
-    {%for key in user %}
-        {% if user_name == key %}
+    
+    {% if user_name in user %}
             
             <p>Ho va Ten :</p>{{user[user_name].name}}<br>
             <p>Age :</p>{{user[user_name].age}}<br>
             <p>Phone number:</p>{{user[user_name].phonenumber}}
             {% endif %}
-        {% if user_name != key %}
+    {% if user_name not in user %}
             <p>User not found</p>
             {%endif%}
-        {% endfor %}
+        
             
 </body>
 </html>
