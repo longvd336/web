@@ -2,7 +2,7 @@
 
 
 
-from flask import Flask,render_template
+from flask import Flask,render_template, request, redirect
 app = Flask(__name__)
 #name <=> app
 
@@ -37,6 +37,9 @@ foods = [
     'type': 'drink'  
     }
     ]
+
+
+
 @app.route('/')#'/' trang chu
 def index():
     return "Hello c4e30"
@@ -70,6 +73,60 @@ def food():
 def detail(index):
     detail_food = foods[index]
     return render_template("food_detail.html", detail_food = detail_food)
+
+@app.route('/food/add_food', methods = ['GET', 'POST'])
+def add_food():
+    if request.method == "GET":
+        return render_template("add_food.html")
+    elif request.method == "POST":
+        
+        form = request.form
+        
+        new_food = {
+            "title": form["title"],
+            "description":form["description"],
+            "link": form["link"],
+            'type': form["type"],
+
+        }
+        foods.append(new_food)
+        
+        return redirect("/food")
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template("login.html")
+    elif request.method == 'POST':
+        form = request.form
+        # if (form["user"] == "longdeptrai" and form["pass"] == "123456"):
+        #     return "welcome"
+        # else:
+        #     return "user not found"
+        print(form)
+        return "Hello world"
+
+@app.route('/register', methods = [ 'GET', 'POST'])
+
+def register():
+    if request.method == 'POST':
+        form = request.form
+        print(form)
+        return "register page"
+
+
+
+
+        
+
+
+
+
+
+
+
+
 
 # khi app chay truc tiep:(python app.py)
 #neu chay gian tiep name == namefile chay gian tiep 
