@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request, redirect
 app = Flask(__name__)
 
 data = [
@@ -15,6 +15,9 @@ data = [
           "link":"https://www.harley-davidson.com/content/dam/h-d/images/motorcycles/my19/street/street-750/overview/hdi/19-street-street-750-hdi-hero.jpg",
           "year":"2015"},
         ] 
+@app.route('/list_motor')
+def result():
+  return render_template("return_data.html", data = data)
 
 @app.route('/motor', methods = ['GET', 'POST'])
 def index():
@@ -30,7 +33,7 @@ def index():
         }
         data.append(new_motor)
         print(data)
-        return "complete!"
+        return redirect("/list_motor")
 
 if __name__ == '__main__':
   app.run(debug=True)

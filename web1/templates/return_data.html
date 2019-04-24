@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Xe motor</title>
+</head>
+<body>
+        {%for value in data %}
+        
+            <b>Hang: </b>{{value.hang}}<br>
+            <b>fee: </b>{{value.fee}}<br>
+            <img src = "{{value.link}}"><br>
+            <b>Year: </b>{{value.year}}<br><br>
+        {% endfor %}
+</body>
+</html>
