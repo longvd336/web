@@ -1,42 +1,10 @@
 #snippet: (fapp + enter)
 
-
-
+from bson.objectid import ObjectId
+from foods_db import Foods_data
 from flask import Flask,render_template, request, redirect
 app = Flask(__name__)
 #name <=> app
-
-foods = [
-    {   'title':"thit cho",
-        'description': "rat ngon",
-        'link':"https://image-us.24h.com.vn/upload/1-2018/images/2018-02-14/1518583095-171-vi-sao-khong-gia-dinh-nao-cung-cho-an-thit-cho-1-1517544835-width640height400.jpg",
-        'type': 'eat'  
-    },
-    {   "title": "buncha",
-        "description":"kha ngon",
-        "link": "https://www.196flavors.com/wp-content/uploads/2019/02/bun-cha-2-FP.jpg",
-        'type': 'eat'  },
-    
-    {"title":"com ga",
-            "description": "hoi ngon",
-            "link":"https://media.foody.vn/res/g70/692641/prof/s/foody-mobile-foody-mobile-foody-a-922-636428010244489101.jpg",
-            'type': 'eat'  },
-    {"title": "tra dao cam sa",
-    "description":"chet",
-    "link":"https://www.huongnghiepaau.com/wp-content/uploads/2017/07/649c1b234f9e05214b0a8859fe37993f.jpg",
-    'type': 'drink'  
-    },
-   {"title": "nuoc chanh",
-    "description":"dau bung",
-    "link":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lemonade_%28Lime_version%29.jpg/300px-Lemonade_%28Lime_version%29.jpg",
-    'type': 'drink'  
-    },
-    {"title": "bia",
-    "description":"good",
-    "link":"https://znews-photo.zadn.vn/w660/Uploaded/iutmtn/2018_06_28/biahanoi1.jpg",
-    'type': 'drink'  
-    }
-    ]
 
 
 
@@ -63,16 +31,21 @@ def sum(a,b):
 @app.route('/food')
 
 def food():
-   
+    foods = Foods_data.find()
     # title = "thit lon"
     # description = "rat ngon"
     # link = "https://image-us.24h.com.vn/upload/1-2018/images/2018-02-14/1518583095-171-vi-sao-khong-gia-dinh-nao-cung-cho-an-thit-cho-1-1517544835-width640height400.jpg"
     return render_template('food.html',foods = foods)   
-@app.route("/food/<int:index>")#detail
 
-def detail(index):
-    detail_food = foods[index]
+
+@app.route("/food/<id>")#detail
+
+def detail(id):
+    
+    detail_food = Foods_data.find_one({"_id": ObjectId(id)})
+
     return render_template("food_detail.html", detail_food = detail_food)
+
 
 @app.route('/food/add_food', methods = ['GET', 'POST'])
 def add_food():
@@ -89,10 +62,32 @@ def add_food():
             'type': form["type"],
 
         }
-        foods.append(new_food)
-        
+        Foods_data.insert_one(new_food)
         return redirect("/food")
 
+
+@app.route('/food/edit/<id>', methods = ["GET", "POST"])
+def edit_food(id):
+    food = Foods_data.find_one({"_id":ObjectId(id)})
+    if request.method == "GET":
+        return render_template("edit_food.html", food = food )
+    elif request.method == "POST":
+        form = request.form
+        new_value = {"$set": {
+            "title":form['title'],
+            "description":form["description"],
+            'link':form['link'],
+            'type':form['type'],
+
+        }}
+        Foods_data.update_one(food, new_value)
+        return redirect('/food')
+
+@app.route('/food/delete/<id>')
+def delete(id):
+    food = Foods_data.find_one({"_id":ObjectId(id)})
+    Foods_data.delete_one(food)
+    return redirect("/food")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -114,19 +109,6 @@ def register():
         form = request.form
         print(form)
         return "register page"
-
-
-
-
-        
-
-
-
-
-
-
-
-
 
 # khi app chay truc tiep:(python app.py)
 #neu chay gian tiep name == namefile chay gian tiep 
