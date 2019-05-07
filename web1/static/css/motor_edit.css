@@ -1,0 +1,16 @@
+html{
+    height: 100%;
+}
+
+
+body{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: start ;
+    align-items: center;
+}
+
+/* #first-h1{
+    color: green;
+} */

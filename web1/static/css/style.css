@@ -1,0 +1,29 @@
+#first-h1 {
+    color: green;
+}
+/* selector {
+    property: value;
+    property: value;
+    property: value;
+}
+*/
+#second-h1{
+    color : red;
+}
+
+.text-blue {
+    color: yellow;
+}
+/* auto truc chinh theo truc chinh (ko co gi => auto chieu ngang) */
+html{
+    height: 100%;
+}
+
+
+body{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: start;
+    align-items: flex-end;
+}

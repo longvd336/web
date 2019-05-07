@@ -1,11 +1,18 @@
 #snippet: (fapp + enter)
-
+from pymongo import MongoClient
 from bson.objectid import ObjectId
-from foods_db import Foods_data
-from flask import Flask,render_template, request, redirect
+from foods_db import Foods_data, User
+from flask import Flask,render_template, request, redirect, session
 app = Flask(__name__)
 #name <=> app
+app.config['SECRET_KEY'] = '1*(#582@4#5869aaa'
+# uri = 'https://cloud.mongodb.com/v2/5cbaeb05ff7a25138cf7afd8#metrics/replicaSet/5cc0579b9ccf644aff927a03/explorer/foods_app/Users/find'
 
+# client = MongoClient(uri)
+
+# all_user = client.foods_app
+
+# all_data = all_user.Users
 
 
 @app.route('/')#'/' trang chu
@@ -31,12 +38,15 @@ def sum(a,b):
 @app.route('/food')
 
 def food():
-    foods = Foods_data.find()
-    # title = "thit lon"
-    # description = "rat ngon"
-    # link = "https://image-us.24h.com.vn/upload/1-2018/images/2018-02-14/1518583095-171-vi-sao-khong-gia-dinh-nao-cung-cho-an-thit-cho-1-1517544835-width640height400.jpg"
-    return render_template('food.html',foods = foods)   
-
+    
+    if 'logged' in session:
+        if session['logged'] :
+            foods = Foods_data.find()
+            return render_template('food.html',foods = foods)   
+        else :
+            return redirect('/login')
+    else:
+        return redirect('/login')
 
 @app.route("/food/<id>")#detail
 
@@ -91,24 +101,65 @@ def delete(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        return render_template("login.html")
-    elif request.method == 'POST':
-        form = request.form
-        # if (form["user"] == "longdeptrai" and form["pass"] == "123456"):
-        #     return "welcome"
-        # else:
-        #     return "user not found"
-        print(form)
-        return "Hello world"
+    if 'logged' in session:
+        print("noob")
+        if session['logged']:
+            return redirect('/food')
+        else:
+            if request.method == 'GET':
+                        
+                return render_template("login.html")
+            elif request.method == 'POST':
+                form = request.form
+                login_user = form['login_username']
+                login_pass = form['login_password']
+                user = User.find_one({'username':login_user})
+                if user is None:
+                    session['logged'] = False
+                    return redirect('/login')
+
+                else:
+                    if login_pass == user['password']:
+                        session['logged'] = True
+                        return redirect('/food')
+                    else:
+                        session['logged'] = False
+                        return redirect('/login')
+                        
+                # if (form["login_user"] == "longdeptrai" and form["login_pass"] == "123456"):
+                #     session['logged'] = True
+                #     return redirect('/food')
+                # else:
+                #     session['logged'] = False
+                #     return redirect('/login')
+    else:
+        print("hello")
+        session['logged'] = False
+        return render_template('login.html')
+        
+@app.route('/logout')
+def logout():
+    if 'logged' in session:
+        session['logged'] = False
+    return redirect('/login')
+
 
 @app.route('/register', methods = [ 'GET', 'POST'])
 
 def register():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return render_template('register.html')
+    elif request.method == 'POST':
         form = request.form
-        print(form)
-        return "register page"
+        register_username = form['username']
+        register_password = form['password']
+            
+        new_user = {
+            'username':register_username,
+            'password':register_password,
+        }
+        User.insert_one(new_user)
+        return redirect("/login")
 
 # khi app chay truc tiep:(python app.py)
 #neu chay gian tiep name == namefile chay gian tiep 

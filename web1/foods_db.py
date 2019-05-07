@@ -13,3 +13,12 @@ Foods_data = foods["foods"]
 #khoi tao du lieu trong ngan tu do 
 
 # foods_data.insert_many(foods_coll)
+
+User = foods['User']
+
+new_user = {
+    'username':'c4e',
+    'password':'c4e'
+}
+
+User.insert_one(new_user)
