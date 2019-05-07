@@ -25,5 +25,5 @@ body{
     display: flex;
     flex-flow: column;
     justify-content: start;
-    align-items: flex-end;
+    align-items: center;
 }

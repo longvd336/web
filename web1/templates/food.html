@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/css/food_style.css">
 </head>
 <body>
     <!-- {{food}} -->
@@ -13,22 +14,26 @@
     <a href="/food/add_food"> them mon an </a>
     
     {%for value in foods %}
-        <h3>Mon an so {{ loop.index }} </h3><br>
-        <b>Tieu de: </b>{{value.title}}<br>
-        <b>Mo ta: </b>{{value.description}}<br>
-        <img src = "{{value.link}}">
-        {% if value.type == "eat" %}
-            <p>Day la do an.</p>
-        {% else %}
-            <P>Day la do uong.</P>
-        
-        {% endif %}
-        <a href="/food/{{ value._id }}"> Chi tiet mon an </a>
+        <div>
+            <h3>Mon an so {{ loop.index }} </h3><br>
+            <b>Tieu de: </b>{{value.title}}<br>
+            <b>Mo ta: </b>{{value.description}}<br>
+            <img src = "{{value.link}}">
+            {% if value.type == "eat" %}
+                <p>Day la do an.</p>
+            {% else %}
+                <P>Day la do uong.</P>
+            
+            {% endif %}
+            <a href="/food/{{ value._id }}"> Chi tiet mon an </a>
+            <br>
 
-        <a href="/food/edit/{{ value._id }}"> sua thong tin </a>
-        
-        <a href="/food/delete/{{ value._id }}"> xoa mon an nay </a>
-        <hr>
+            <a href="/food/edit/{{ value._id }}"> sua thong tin </a>
+            <br>
+            <a href="/food/delete/{{ value._id }}"> xoa mon an nay </a>
+            <br>
+            <hr>
+        </div>
     {% endfor %}
 
 <!-- <b>: boi den, <br>: xuong dong -->
